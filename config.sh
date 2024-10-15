@@ -16,6 +16,7 @@ QUAST_DIR="${RUN_DIR}/${SAMPLE_NAME}/05-quast"
 KRAKEN_ASSEMBLY_DIR="${RUN_DIR}/${SAMPLE_NAME}/06-kraken-assembly"
 MASH_DIR="${RUN_DIR}/${SAMPLE_NAME}/07-mash-fastani"
 MLST_DIR="${RUN_DIR}/${SAMPLE_NAME}/08-mlst"
+AMR_DIR="${RUN_DIR}/${SAMPLE_NAME}/09-amr"
 
 # Databases
 BBDUK_REF="/home/igc-1/anaconda3/envs/busco/share/bbmap/resources/adapters.fa"

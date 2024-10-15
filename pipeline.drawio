@@ -58,6 +58,13 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
+                <mxCell id="38" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="17" target="37">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="800" y="240"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
                 <mxCell id="17" value="spades" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="160" y="200" width="80" height="80" as="geometry"/>
                 </mxCell>
@@ -69,6 +76,9 @@
                 </mxCell>
                 <mxCell id="34" value="mlst" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="640" y="320" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" value="amr&lt;br&gt;_finder" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="760" y="320" width="80" height="80" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
