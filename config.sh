@@ -32,4 +32,4 @@ MASH_DB_VERSION=$( echo ${MASH_DB##*/} | cut -d '_' -f1,2 )
 
 TAXA="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/taxes_20230516.csv"
 
-MLST_DB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/mlst_db_20230728.tar.gz"
+MLST_DB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/mlst_db_20230728/db"
