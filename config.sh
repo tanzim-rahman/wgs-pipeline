@@ -17,6 +17,7 @@ KRAKEN_ASSEMBLY_DIR="${RUN_DIR}/${SAMPLE_NAME}/06-kraken-assembly"
 MASH_DIR="${RUN_DIR}/${SAMPLE_NAME}/07-mash-fastani"
 MLST_DIR="${RUN_DIR}/${SAMPLE_NAME}/08-mlst"
 AMR_DIR="${RUN_DIR}/${SAMPLE_NAME}/09-amr"
+ASSEMBLY_RATIO_DIR="${RUN_DIR}/${SAMPLE_NAME}/10-assembly-ratio"
 
 # Databases
 BBDUK_REF="/home/igc-1/anaconda3/envs/busco/share/bbmap/resources/adapters.fa"
@@ -34,3 +35,5 @@ MASH_DB_VERSION=$( echo ${MASH_DB##*/} | cut -d '_' -f1,2 )
 TAXA="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/taxes_20230516.csv"
 
 MLST_DB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/mlst_db_20230728/db"
+
+NCBI_ASSEMBLY_STATS="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/NCBI_Assembly_stats_20230504.txt"
