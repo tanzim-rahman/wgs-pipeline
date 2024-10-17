@@ -56,14 +56,14 @@ DB_NAME_PF=$( echo ${GAMMA_DBPF} | sed 's:.*/::' | sed 's/.fasta//' )
     -k ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}.kraken2_trimmed.top_kraken_hit.txt \
     -o ${STATS_DIR}/${SAMPLE_NAME}_summaryline.tsv
 
-mkdir -p "results"
+# mkdir -p "results"
 
-./bin/phoenix/Create_phoenix_summary_tsv.py \
-    --out results/Phoenix_Summary.tsv \
-    --paths ${STATS_DIR}/${SAMPLE_NAME}_summaryline.tsv
+# ./bin/phoenix/Create_phoenix_summary_tsv.py \
+#     --out results/Phoenix_Summary.tsv \
+#     --paths ${STATS_DIR}/${SAMPLE_NAME}_summaryline.tsv
 
-./bin/phoenix/GRiPHin.py \
-    -d raw-data/${RUN_NAME} \
-    -a ${GAMMA_ARDB} \
-    --output ${STATS_DIR} \
-    --coverage 30 \
+# ./bin/phoenix/GRiPHin.py \
+#     -d raw-data/${RUN_NAME} \
+#     -a ${GAMMA_ARDB} \
+#     --output ${STATS_DIR} \
+#     --coverage 30 \
