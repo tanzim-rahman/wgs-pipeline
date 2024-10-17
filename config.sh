@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-RUN_NAME="test_run"
-
-INPUT_DIR="/home/igc-1/tahsin/shotgun/"
-SAMPLE_NAME="104S2_S49_L001"
-
 WORK_DIR=$( pwd )
 RUN_DIR="${WORK_DIR}/runs/${RUN_NAME}"
 
