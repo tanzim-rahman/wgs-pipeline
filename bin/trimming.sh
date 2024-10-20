@@ -10,8 +10,8 @@ mkdir -p ${QC_DIR}
 
 bbduk.sh \
     -Xmx50g \
-    in1=${INPUT_DIR}/${SAMPLE_NAME}_R1_001.fastq.gz \
-    in2=${INPUT_DIR}/${SAMPLE_NAME}_R2_001.fastq.gz \
+    in1=${INPUT_DIR}/${SAMPLE_NAME}_R1.fastq.gz \
+    in2=${INPUT_DIR}/${SAMPLE_NAME}_R2.fastq.gz \
     out1="${QC_DIR}/${SAMPLE_NAME}_R1_trimmed.fastq.gz" \
     out2="${QC_DIR}/${SAMPLE_NAME}_R2_trimmed.fastq.gz" \
     threads=30 \
@@ -46,7 +46,9 @@ if [[ ! -s ${READ1} ]] && [[ ! -s ${READ2} ]]; then
 
     echo -e '{\n\t"summary": {\n\t\t"after_filtering": {\n\t\t\t"total_reads":0,\n\t\t\t"total_bases":0,\n\t\t\t"q20_bases":0,\n\t\t\t"q30_bases":0,\n\t\t\t"q20_rate":0,\n\t\t\t"q30_rate":0,\n\t\t\t"read1_mean_length":0,\n\t\t\t"gc_content":0\n\t\t}\n\t}\n}' > ${QC_DIR}/${SAMPLE_NAME}_singles.fastp.json
 
-    # ./bin/create_empty_fastp_json.sh -n ${SAMPLE_NAME}
+    ./bin/phoenix/create_empty_fastp_json.sh -n ${SAMPLE_NAME}
+
+    mv ${SAMPLE_NAME}_singles.fastp.json ${QC_DIR}/${SAMPLE_NAME}_singles.fastp.json
 
     touch "${QC_DIR}/${SAMPLE_NAME}_empty.html"
     touch ${QC_DIR}/${SAMPLE_NAME}.singles.fastq

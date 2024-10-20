@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 RUN_NAME="test_run"
+export RUN_NAME
 
 INPUT_DIR="${PWD}/raw-data/${RUN_NAME}"
 export INPUT_DIR
@@ -32,5 +33,3 @@ for FILES in ${INPUT_DIR}/*_R1.fastq.gz; do
     
     ./bin/stats.sh
 done
-
-# ls $INPUT_DIR
