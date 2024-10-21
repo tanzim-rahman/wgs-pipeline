@@ -10,8 +10,8 @@ mkdir -p ${QC_DIR}
 
 bbduk.sh \
     -Xmx50g \
-    in1=${INPUT_DIR}/${SAMPLE_NAME}_R1.fastq.gz \
-    in2=${INPUT_DIR}/${SAMPLE_NAME}_R2.fastq.gz \
+    in1=${READ_R1} \
+    in2=${READ_R2} \
     out1="${QC_DIR}/${SAMPLE_NAME}_R1_trimmed.fastq.gz" \
     out2="${QC_DIR}/${SAMPLE_NAME}_R2_trimmed.fastq.gz" \
     threads=30 \

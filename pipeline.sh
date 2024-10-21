@@ -3,36 +3,39 @@
 RUN_NAME="test_run"
 export RUN_NAME
 
-INPUT_DIR="${PWD}/raw-data/${RUN_NAME}"
-export INPUT_DIR
+sed 1d samplesheet.csv | while read LINE; do
 
-# for FILES in ${INPUT_DIR}/*_R1.fastq.gz; do
-#     SAMPLE_NAME=${FILES##*/}
-#     SAMPLE_NAME=${SAMPLE_NAME%_R1.fastq.gz}
-#     export SAMPLE_NAME
+    SAMPLE_NAME=$( echo ${LINE} | cut -f 1 -d ',' )
+    export SAMPLE_NAME
 
-#     ./bin/trimming.sh
+    READ_R1=$( echo ${LINE} | cut -f 2 -d ',' )
+    export READ_R1
 
-#     ./bin/kraken2_trimmed.sh
-    
-#     ./bin/spades.sh
+    READ_R2=$( echo ${LINE} | cut -f 3 -d ',' )
+    export READ_R2
 
-#     ./bin/gamma.sh
+    ./bin/trimming.sh
 
-#     ./bin/quast.sh
+    ./bin/kraken2_trimmed.sh
 
-#     ./bin/kraken2_assembly.sh
+    ./bin/spades.sh
 
-#     ./bin/mash_fastani.sh
+    ./bin/gamma.sh
 
-#     ./bin/mlst.sh
+    ./bin/quast.sh
 
-#     ./bin/amr_finder.sh
+    ./bin/kraken2_assembly.sh
 
-#     ./bin/assembly_ratio.sh
-    
-#     ./bin/stats.sh
-# done
+    ./bin/mash_fastani.sh
+
+    ./bin/mlst.sh
+
+    ./bin/amr_finder.sh
+
+    ./bin/assembly_ratio.sh
+
+    ./bin/stats.sh
+done
 
 source config.sh
 
