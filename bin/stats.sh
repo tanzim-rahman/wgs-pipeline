@@ -4,8 +4,8 @@ source config.sh
 
 mkdir -p ${STATS_DIR}
 
-./bin/phoenix/q30.py "${INPUT_DIR}/${SAMPLE_NAME}_R1_001.fastq.gz" > ${SAMPLE_NAME}_R1_stats.txt
-./bin/phoenix/q30.py "${INPUT_DIR}/${SAMPLE_NAME}_R2_001.fastq.gz" > ${SAMPLE_NAME}_R2_stats.txt
+./bin/phoenix/q30.py "${INPUT_DIR}/${SAMPLE_NAME}_R1.fastq.gz" > ${SAMPLE_NAME}_R1_stats.txt
+./bin/phoenix/q30.py "${INPUT_DIR}/${SAMPLE_NAME}_R2.fastq.gz" > ${SAMPLE_NAME}_R2_stats.txt
 ./bin/phoenix/create_raw_stats_output.py -n ${SAMPLE_NAME} -r1 ${SAMPLE_NAME}_R1_stats.txt -r2 ${SAMPLE_NAME}_R2_stats.txt
 
 mv ${SAMPLE_NAME}_R1_stats.txt ${SAMPLE_NAME}_R2_stats.txt ${SAMPLE_NAME}_raw_read_counts.txt ${STATS_DIR}
