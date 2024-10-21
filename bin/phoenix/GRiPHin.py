@@ -22,6 +22,7 @@ from Bio import SeqIO
 
 def parseArgs(args=None):
     parser = argparse.ArgumentParser(description='Script to generate a PhoeNix summary excel sheet.')
+    parser.add_argument('-r', '--run_directory', default=None, required=True, dest='run_directory', help='Directory for the sample runs.')
     parser.add_argument('-s', '--samplesheet', default=None, required=False, dest='samplesheet', help='PHoeNIx style samplesheet of sample,directory in csv format. Directory is expected to have PHoeNIx stype output.')
     parser.add_argument('-d', '--directory', default=None, required=False, dest='directory', help='If a directory is given rather than samplesheet GRiPHin will create one for all samples in the directory.')
     parser.add_argument('-c', '--control_list', required=False, dest='control_list', help='CSV file with a list of sample_name,new_name. This option will output the new_name rather than the sample name to "blind" reports.')
@@ -781,14 +782,14 @@ def Get_Files(directory, sample_name):
     # if there is a trailing / remove it
     directory = directory.rstrip('/')
     # create file names
-    trim_stats = directory + "/qc_stats/" + sample_name + "_trimmed_read_counts.txt"
-    raw_stats = directory + "/raw_stats/" + sample_name + "_raw_read_counts.txt"
-    kraken_trim = directory + "/kraken2_trimd/" + sample_name + ".kraken2_trimd.top_kraken_hit.txt"
-    kraken_trim_report = directory + "/kraken2_trimd/" + sample_name + ".kraken2_trimd.summary.txt"
-    kraken_wtasmbld = directory + "/kraken2_asmbld_weighted/" + sample_name + ".kraken2_wtasmbld.top_kraken_hit.txt"
-    kraken_wtasmbld_report = directory + "/kraken2_asmbld_weighted/" + sample_name + ".kraken2_wtasmbld.summary.txt"
-    quast_report = directory + "/quast/" + sample_name + "_summary.tsv"
-    mlst_file = directory + "/mlst/" + sample_name + "_combined.tsv"
+    trim_stats = directory + "/01-quality_control/" + sample_name + "_trimmed_read_counts.txt"
+    raw_stats = directory + "/11-stats/" + sample_name + "_raw_read_counts.txt"
+    kraken_trim = directory + "/02-kraken-trimmed/" + sample_name + ".kraken2_trimmed.top_kraken_hit.txt"
+    kraken_trim_report = directory + "/02-kraken-trimmed/" + sample_name + ".kraken2_trimmed.summary.txt"
+    kraken_wtasmbld = directory + "/06-kraken-assembly/" + sample_name + ".kraken2_wtasmbld.top_kraken_hit.txt"
+    kraken_wtasmbld_report = directory + "/06-kraken-assembly/" + sample_name + ".kraken2_wtasmbld.summary.txt"
+    quast_report = directory + "/05-quast/" + "report.tsv"
+    mlst_file = directory + "/08-mlst/" + sample_name + "_combined.tsv"
     # This creates blank files for if no file exists. Varibles will be made into "Unknown" in the Get_Metrics function. Need to only do this for files determined by glob
     # You only need this for glob because glob will throw an index error if not.
     try:
@@ -796,30 +797,30 @@ def Get_Files(directory, sample_name):
     except IndexError:
         busco_short_summary =  directory + "/BUSCO/short_summary.specific.blank" + sample_name + ".filtered.scaffolds.fa.txt"
     try:
-        asmbld_ratio = glob.glob(directory + "/" + sample_name + "_Assembly_ratio_*.txt")[0]
+        asmbld_ratio = glob.glob(directory + "/10-assembly-ratio/" + sample_name + "_Assembly_ratio_*.txt")[0]
     except IndexError:
         asmbld_ratio = directory + "/" + sample_name + "_Assembly_ratio_blank.txt"
     try:
-        gc = glob.glob(directory + "/" + sample_name + "_GC_content_*.txt")[0]
+        gc = glob.glob(directory + "/10-assembly-ratio/" + sample_name + "_GC_content_*.txt")[0]
     except IndexError:
         gc = directory + "/" + sample_name + "_GC_content_blank.txt"
     try:
-        gamma_ar_file = glob.glob(directory + "/gamma_ar/" + sample_name + "_*.gamma")[0]
+        gamma_ar_file = glob.glob(directory + "/04-gamma/" + sample_name + "_Res*.gamma")[0]
     except IndexError:
         gamma_ar_file = directory + "/gamma_ar/" + sample_name + "_blank.gamma"
     try:
-        gamma_pf_file = glob.glob(directory + "/gamma_pf/" + sample_name + "_*.gamma")[0]
+        gamma_pf_file = glob.glob(directory + "/04-gamma/" + sample_name + "_PF*.gamma")[0]
     except IndexError:
         gamma_pf_file = directory + "/gamma_pf/" + sample_name + "_blank.gamma"
     try: 
-        gamma_hv_file = glob.glob(directory + "/gamma_hv/" + sample_name + "_*.gamma")[0]
+        gamma_hv_file = glob.glob(directory + "/04-gamma/" + sample_name + "_HyperVirulence*.gamma")[0]
     except IndexError:
         gamma_hv_file = directory + "/gamma_hv/" + sample_name + "_blank.gamma"
     try:
-        fast_ani_file = glob.glob(directory + "/ANI/" + sample_name + "_REFSEQ_*.fastANI.txt")[0]
+        fast_ani_file = glob.glob(directory + "/07-mash-fastani/" + sample_name + "_REFSEQ_*.fastANI.txt")[0]
     except IndexError:
         fast_ani_file = directory + "/ANI/" + sample_name + ".fastANI.txt"
-    tax_file = directory + "/" + sample_name + ".tax" # this file will tell you if kraken2 wtassembly, kraken2 trimmed (reads) or fastani determined the taxa
+    tax_file = directory + "/07-mash-fastani/" + sample_name + ".tax" # this file will tell you if kraken2 wtassembly, kraken2 trimmed (reads) or fastani determined the taxa
     try:
         srst2_file = glob.glob(directory + "/srst2/" + sample_name + "__fullgenes__*_srst2__results.txt")[0]
     except IndexError:
@@ -1169,7 +1170,7 @@ def write_to_excel(set_coverage, output, df, qc_max_col, ar_gene_count, pf_gene_
     # add autofilter
     worksheet.autofilter(1, 0, max_row, max_col - 1)
     # Close the Pandas Excel writer and output the Excel file.
-    writer.save()
+    writer.close()
 
 def blind_samples(final_df, control_file):
     """If you passed a file to -c this will swap out sample names to 'blind' the WGS_IDs in the final excel file."""
@@ -1233,7 +1234,7 @@ def convert_excel_to_tsv(output):
     #drop the footer information
     data_xlsx = data_xlsx.iloc[:-10] 
     #Write dataframe into csv
-    data_xlsx.to_csv(output_file + '.tsv', sep='\t', encoding='utf-8',  index=False, line_terminator='\n')
+    data_xlsx.to_csv(output_file + '.tsv', sep='\t', encoding='utf-8',  index=False, lineterminator='\n')
 
 def main():
     args = parseArgs()
@@ -1261,7 +1262,7 @@ def main():
         header = next(csv_reader) # skip the first line of the samplesheet
         for row in csv_reader:
             sample_name = row[0]
-            directory = row[1]
+            directory = f'{args.run_directory}/{sample_name}/'
             #data_location, parent_folder = Get_Parent_Folder(directory)
             trim_stats, raw_stats, kraken_trim, kraken_trim_report, kraken_wtasmbld_report, kraken_wtasmbld, quast_report, mlst_file, busco_short_summary, asmbld_ratio, gc, gamma_ar_file, gamma_pf_file, gamma_hv_file, fast_ani_file, tax_file, srst2_file = Get_Files(directory, sample_name)
             #Get the metrics for the sample

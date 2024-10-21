@@ -15,7 +15,6 @@ def parseArgs(args=None):
     parser = argparse.ArgumentParser(description='Script to generate a PhoeNix summary excel sheet')
     parser.add_argument('-o', '--out', dest='output_file', required=True, help='output file name')
     parser.add_argument('-b', '--busco', action='store_true', help='parameter to know if busco was run')
-    parser.add_argument('-p', '--paths', dest='summary_line_paths', required=False, help='paths to summary line files')
     parser.add_argument('files', nargs=argparse.REMAINDER)
     return parser.parse_args()
 
@@ -35,8 +34,8 @@ def List_TSV(output_file, input_list, busco):
                 for line in f2:
                     f.write(line + '\n')
 
-def collect_files(paths='*.tsv'):
-    summary_files = glob.glob(paths)
+def collect_files():
+    summary_files = glob.glob('*.tsv')
     try: #check to see if the empty_summaryline file is there and remove it if so
         summary_files.remove('empty_summaryline.tsv')
     except ValueError:
@@ -45,10 +44,7 @@ def collect_files(paths='*.tsv'):
 
 def main():
     args = parseArgs()
-    if args.summary_line_paths:
-        summary_files = collect_files(args.summary_line_paths)
-    else:
-        summary_files = collect_files()
+    summary_files = collect_files()
     List_TSV(args.output_file, summary_files, args.busco)
 
 if __name__ == '__main__':
