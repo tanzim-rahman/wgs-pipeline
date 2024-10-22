@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+RUN_NAME="morganella"
+SAMPLE_SHEET="/media/igc-1/My_Book/morganella/samplesheet.csv"
+
 WORK_DIR=$( pwd )
-RUN_DIR="${WORK_DIR}/runs/${RUN_NAME}"
+ROOT_DIR="/media/igc-1/My_Book/morganella"
+RUN_DIR="${ROOT_DIR}/results/runs"
 
 QC_DIR="${RUN_DIR}/${SAMPLE_NAME}/01-quality_control"
 KRAKEN_TRIMMED_DIR="${RUN_DIR}/${SAMPLE_NAME}/02-kraken-trimmed"
