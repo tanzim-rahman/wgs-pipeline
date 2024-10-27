@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
+source config.sh
+
 source ${CONDA_LOCATION}
 
-conda activate wgs
-
-source config.sh
+conda activate ${CONDA_ENV_PROKKA}
 
 mkdir -p ${AMR_DIR}
 
@@ -23,7 +23,7 @@ ${WORK_DIR}/bin/phoenix/get_taxa_for_amrfinder.py -t ${MASH_DIR}/${SAMPLE_NAME}.
 
 conda deactivate
 
-conda activate amrfinder
+conda activate ${CONDA_ENV_AMRFINDER}
 
 IFS=$'\n' read -r -d '' -a ORGANISMS < ${AMR_DIR}/${SAMPLE_NAME}_AMRFinder_Organism.csv
 

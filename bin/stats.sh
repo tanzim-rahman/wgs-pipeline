@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
+source config.sh
+
 source ${CONDA_LOCATION}
 
-conda activate wgs
-
-source config.sh
+conda activate ${CONDA_ENV_STATS}
 
 cat ${SAMPLE_SHEET} | tail -n +$1 | head -n $2 | while read LINE || [ -n "${LINE}" ]; do
 

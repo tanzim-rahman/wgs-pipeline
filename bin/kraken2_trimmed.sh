@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
+source config.sh
+
 source ${CONDA_LOCATION}
 
-conda activate wgs
-
-source config.sh
+conda activate ${CONDA_ENV_KRAKEN2}
 
 mkdir -p ${KRAKEN_TRIMMED_DIR}
 
@@ -29,6 +29,10 @@ ${WORK_DIR}/bin/phoenix/kreport2mpa.py \
 ${WORK_DIR}/bin/phoenix/kreport2krona.py \
     --report ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}.kraken2_trimmed.summary.txt \
     --output ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}_trimmed.krona
+
+conda deactivate
+
+conda activate ${CONDA_ENV_KRONATOOLS}
 
 ktImportText  \
     -o ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}_trimmed.krona.html \

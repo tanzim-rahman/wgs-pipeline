@@ -55,3 +55,17 @@ NCBI_ASSEMBLY_STATS="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/NCBI_A
 CONDA_LOCATION="/home/igc-1/anaconda3/etc/profile.d/conda.sh"
 
 # Conda environments
+CONDA_ENV_BBMAP="wgs"
+CONDA_ENV_FASTP="wgs"
+CONDA_ENV_FASTQC="wgs"
+CONDA_ENV_KRAKEN2="wgs"
+CONDA_ENV_KRONATOOLS="wgs"
+CONDA_ENV_SPADES="wgs"
+CONDA_ENV_GAMMA="wgs"
+CONDA_ENV_QUAST="wgs"
+CONDA_ENV_MASH="wgs"
+CONDA_ENV_FASTANI="wgs"
+CONDA_ENV_MLST="wgs"
+CONDA_ENV_PROKKA="wgs"
+CONDA_ENV_AMRFINDER="amrfinder"
+CONDA_ENV_STATS="wgs"

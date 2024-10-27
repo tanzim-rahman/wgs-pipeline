@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
+source config.sh
+
 source ${CONDA_LOCATION}
 
-conda activate wgs
-
-source config.sh
+conda activate ${CONDA_ENV_MLST}
 
 mkdir -p ${MLST_DIR}
 

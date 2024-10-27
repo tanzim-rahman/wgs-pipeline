@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
+source config.sh
+
 source ${CONDA_LOCATION}
 
-conda activate wgs
-
-source config.sh
+conda activate ${CONDA_ENV_SPADES}
 
 mkdir -p ${SPADES_DIR}
 
@@ -23,6 +23,10 @@ ${WORK_DIR}/bin/phoenix/rename_fasta_headers.py \
     --name ${SAMPLE_NAME}
 
 gzip --force ${SPADES_DIR}/${SAMPLE_NAME}.renamed.scaffolds.fa
+
+conda deactivate
+
+conda activate ${CONDA_ENV_BBMAP}
 
 reformat.sh \
     -Xmx120g \

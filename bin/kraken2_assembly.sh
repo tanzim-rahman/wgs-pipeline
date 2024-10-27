@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
+source config.sh
+
 source ${CONDA_LOCATION}
 
-conda activate wgs
-
-source config.sh
+conda activate ${CONDA_ENV_KRAKEN2}
 
 mkdir -p ${KRAKEN_ASSEMBLY_DIR}
 
@@ -36,6 +36,10 @@ ${WORK_DIR}/bin/phoenix/kraken2_best_hit.sh \
     -n ${SAMPLE_NAME}
 
 mv ${SAMPLE_NAME}.summary.txt ${KRAKEN_ASSEMBLY_DIR}/${SAMPLE_NAME}.kraken2_wtasmbld.top_kraken_hit.txt
+
+conda deactivate
+
+conda activate ${CONDA_ENV_KRONATOOLS}
 
 ktImportText  \
     -o ${KRAKEN_ASSEMBLY_DIR}/${SAMPLE_NAME}_wtasmbld.krona.html \

@@ -2,7 +2,7 @@
 
 source ${CONDA_LOCATION}
 
-conda activate wgs
+conda activate ${CONDA_ENV_MASH}
 
 source config.sh
 
@@ -28,6 +28,10 @@ ${WORK_DIR}/bin/phoenix/sort_and_prep_dist.sh \
     -o ${MASH_DIR}/reference_dir
 
 mv ${SAMPLE_NAME}_${MASH_DB_VERSION}_best_MASH_hits.txt ${MASH_DIR}/${SAMPLE_NAME}_${MASH_DB_VERSION}_best_MASH_hits.txt
+
+conda deactivate
+
+conda activate ${CONDA_ENV_FASTANI}
 
 fastANI \
     -q ${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa.gz \

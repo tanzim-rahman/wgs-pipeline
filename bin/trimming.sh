@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
+source config.sh
+
 source ${CONDA_LOCATION}
 
-conda activate busco
-
-source config.sh
+conda activate ${CONDA_ENV_BBMAP}
 
 mkdir -p ${QC_DIR}
 
@@ -20,7 +20,7 @@ bbduk.sh \
 
 conda deactivate
 
-conda activate wgs
+conda activate ${CONDA_ENV_FASTP}
 
 fastp \
     --in1 ${QC_DIR}/${SAMPLE_NAME}_R1_trimmed.fastq.gz \
@@ -89,6 +89,10 @@ ${WORK_DIR}/bin/phoenix/FastP_QC.py \
     --name ${SAMPLE_NAME}
 
 mv ${SAMPLE_NAME}_trimmed_read_counts.txt ${QC_DIR}/${SAMPLE_NAME}_trimmed_read_counts.txt
+
+conda deactivate
+
+conda activate ${CONDA_ENV_FASTQC}
 
 fastqc \
     --threads 30 \
