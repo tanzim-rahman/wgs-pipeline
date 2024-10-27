@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source /home/igc-1/anaconda3/etc/profile.d/conda.sh
+source ${CONDA_LOCATION}
 
 conda activate wgs
 
@@ -17,7 +17,7 @@ spades.py \
     --phred-offset 33 \
     -o ${SPADES_DIR}/
 
-./bin/phoenix/rename_fasta_headers.py \
+${WORK_DIR}/bin/phoenix/rename_fasta_headers.py \
     --input ${SPADES_DIR}/scaffolds.fasta \
     --output ${SPADES_DIR}/${SAMPLE_NAME}.renamed.scaffolds.fa \
     --name ${SAMPLE_NAME}

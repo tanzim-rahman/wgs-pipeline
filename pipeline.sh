@@ -1,12 +1,12 @@
-#!/usr/bin/env bash
+!/usr/bin/env bash
 
 source config.sh
 
-echo `date` >> times.txt
-echo "" >> times.txt
+echo `date -I'seconds'` >> times_${RUN_NAME}.txt
+echo "" >> times_${RUN_NAME}.txt
 
 global_start=`date +%s`
-sed 1d ${SAMPLE_SHEET} | while read LINE; do
+sed 1d ${SAMPLE_SHEET} | while read -r LINE || [ -n "${LINE}" ]; do
 
     SAMPLE_NAME=$( echo ${LINE} | cut -f 1 -d ',' )
     export SAMPLE_NAME
@@ -17,108 +17,117 @@ sed 1d ${SAMPLE_SHEET} | while read LINE; do
     READ_R2=$( echo ${LINE} | cut -f 3 -d ',' )
     export READ_R2
 
-    echo ${SAMPLE_NAME} >> times.txt
+    echo ${SAMPLE_NAME} >> times_${RUN_NAME}.txt
 
     trim_start=`date +%s`
-    ./bin/trimming.sh
+    ${WORK_DIR}/bin/trimming.sh
     end=`date +%s`
-    trim_runtime=$((end-trim_start))
+    runtime=$(( end - trim_start ))
 
-    echo "Trimming: ${trim_runtime}" >> times.txt
+    echo "Trimming: ${runtime}" >> times_${RUN_NAME}.txt
 
     start=`date +%s`
-    ./bin/kraken2_trimmed.sh
+    ${WORK_DIR}/bin/kraken2_trimmed.sh
     end=`date +%s`
-    kraken_trim_runtime=$((end-start))
+    runtime=$(( end - start ))
 
-    echo "Kraken Trimmed: ${kraken_trim_runtime}" >> times.txt
+    echo "Kraken Trimmed: ${runtime}" >> times_${RUN_NAME}.txt
 
     start=`date +%s`
-    ./bin/spades.sh
+    ${WORK_DIR}/bin/spades.sh
     end=`date +%s`
-    spades_runtime=$((end-start))
+    runtime=$(( end - start ))
 
-    echo "Spades: ${spades_runtime}" >> times.txt
+    echo "Spades: ${runtime}" >> times_${RUN_NAME}.txt
 
     start=`date +%s`
-    ./bin/gamma.sh
+    ${WORK_DIR}/bin/gamma.sh
     end=`date +%s`
-    gamma_runtime=$((end-start))
+    runtime=$(( end - start ))
 
-    echo "Gamma: ${gamma_runtime}" >> times.txt
+    echo "Gamma: ${runtime}" >> times_${RUN_NAME}.txt
 
     start=`date +%s`
-    ./bin/quast.sh
+    ${WORK_DIR}/bin/quast.sh
     end=`date +%s`
-    quast_runtime=$((end-start))
+    runtime=$(( end - start ))
 
-    echo "Quast: ${quast_runtime}" >> times.txt
+    echo "Quast: ${runtime}" >> times_${RUN_NAME}.txt
 
     start=`date +%s`
-    ./bin/kraken2_assembly.sh
+    ${WORK_DIR}/bin/kraken2_assembly.sh
     end=`date +%s`
-    kraken_assembly_runtime=$((end-start))
+    runtime=$(( end - start ))
 
-    echo "Kraken Assembly: ${kraken_assembly_runtime}" >> times.txt
+    echo "Kraken Assembly: ${runtime}" >> times_${RUN_NAME}.txt
 
     start=`date +%s`
-    ./bin/mash_fastani.sh
+    ${WORK_DIR}/bin/mash_fastani.sh
     end=`date +%s`
-    mash_fastani_runtime=$((end-start))
+    runtime=$(( end - start ))
 
-    echo "Mash + Fastani: ${mash_fastani_runtime}" >> times.txt
+    echo "Mash + Fastani: ${runtime}" >> times_${RUN_NAME}.txt
 
     start=`date +%s`
-    ./bin/mlst.sh
+    ${WORK_DIR}/bin/mlst.sh
     end=`date +%s`
-    mlst_runtime=$((end-start))
+    runtime=$(( end - start ))
 
-    echo "MLST: ${mlst_runtime}" >> times.txt
+    echo "MLST: ${runtime}" >> times_${RUN_NAME}.txt
 
     start=`date +%s`
-    ./bin/amr_finder.sh
+    ${WORK_DIR}/bin/amr_finder.sh
     end=`date +%s`
-    amr_runtime=$((end-start))
+    runtime=$(( end - start ))
 
-    echo "Prokka + AMRFinder: ${amr_runtime}" >> times.txt
+    echo "Prokka + AMRFinder: ${runtime}" >> times_${RUN_NAME}.txt
 
     start=`date +%s`
-    ./bin/assembly_ratio.sh
-    end=`date +%s`
-    assembly_ratio_runtime=$((end-start))
+    ${WORK_DIR}/bin/assembly_ratio.sh
+    assembly_ratio_end=`date +%s`
+    runtime=$(( assembly_ratio_end - start ))
 
-    echo "Assembly Ratio: ${assembly_ratio_runtime}" >> times.txt
+    echo "Assembly Ratio: ${runtime}" >> times_${RUN_NAME}.txt
 
-    start=`date +%s`
-    ./bin/stats.sh
-    stats_end=`date +%s`
-    stats_runtime=$((stats_end-start))
+    total_runtime=$(( assembly_ratio_end - trim_start ))
+    echo "Total: ${total_runtime}" >> times_${RUN_NAME}.txt
 
-    echo "Stats: ${stats_runtime}" >> times.txt
-
-    total_runtime=$((stats_end-trim_start))
-    echo "Total: ${total_runtime}" >> times.txt
-
-    echo "" >> times.txt
+    echo "" >> times_${RUN_NAME}.txt
+    fi
 done
 
-echo "" >> times.txt
+STATS_CPU=15
+TOTAL_SAMPLES=$( cat ${SAMPLE_SHEET} | wc -l )
+TOTAL_SAMPLES=$(( TOTAL_SAMPLES - 1 ))
+PROCESS_SAMPLES=$(( TOTAL_SAMPLES_SAMPLES / STATS_CPU + 1 ))
 
-mkdir -p "${RUN_DIR}/summary"
+start=`date +%s`
+for i in $(seq 0 $(( STATS_CPU - 1 ))); do
+    ${WORK_DIR}/bin/stats.sh $(( i*PROCESS_SAMPLES + 2 )) ${PROCESS_SAMPLES} &
+done
+wait
+echo "Stats Finished"
+end=`date +%s`
+runtime=$(( end - start ))
 
-mv ${RUN_DIR}/*/11-stats/*_summaryline.tsv ${RUN_DIR}/summary
+echo "All Stats: ${runtime}" >> times_${RUN_NAME}.txt
+echo "" >> times_${RUN_NAME}.txt
+
+mkdir -p "${RESULTS_DIR}/summary"
+
+mv ${RUN_DIR}/*/11-stats/*_summaryline.tsv ${RESULTS_DIR}/summary
 
 (
-    cd ${RUN_DIR}/summary && \
+    cd ${RESULTS_DIR}/summary && \
 
     ${WORK_DIR}/bin/phoenix/Create_phoenix_summary_tsv.py \
         --out Phoenix_Summary.tsv && \
 
     ${WORK_DIR}/bin/phoenix/GRiPHin.py \
         -r ${RUN_DIR} \
-        -s ${ROOT_DIR}/samplesheet.csv \
+        -s ${SAMPLE_SHEET} \
         -a ${GAMMA_ARDB} \
-        --output ${RUN_DIR}/summary/${RUN_NAME}_GRiPHin_Summary.xlsx \
+        --output ${RESULTS_DIR}/summary/${RUN_NAME}_GRiPHin_Summary.xlsx \
         --coverage 30 \
         --phoenix
 )
@@ -126,4 +135,4 @@ mv ${RUN_DIR}/*/11-stats/*_summaryline.tsv ${RUN_DIR}/summary
 global_end=`date +%s`
 global_runtime=$(( global_end - global_start ))
 
-echo -e "Entire process took $(( global_runtime/60  )) minutes.\n\n" >> times.txt
+echo -e "Entire process took $(( global_runtime/60  )) minutes.\n\n" >> times_${RUN_NAME}.txt

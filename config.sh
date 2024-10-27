@@ -1,12 +1,22 @@
 #!/usr/bin/env bash
 
+# NOTE: Directory names must NOT end with a "/"
+
+# Name for the current run.
 RUN_NAME="morganella"
+# Location of the samplesheet file that contains sample information.
 SAMPLE_SHEET="/media/igc-1/My_Book/morganella/samplesheet.csv"
 
-WORK_DIR=$( pwd )
+# Directory where the pipeline.sh file as well as the bin folder is located.
+WORK_DIR="/home/igc-1/Documents/Tanzim/phoenix-pipeline"
+# Directory where the results directory will be stored. This can be the same directory that contains the input FastQ files.
 ROOT_DIR="/media/igc-1/My_Book/morganella"
-RUN_DIR="${ROOT_DIR}/results/runs"
+# Directory where the results and final run summary will be stored.
+RESULTS_DIR="${ROOT_DIR}/results"
+# Directory where the run outputs of each sample will be stored.
+RUN_DIR="${RESULTS_DIR}/runs"
 
+# Directories for the various stages of the pipeline.
 QC_DIR="${RUN_DIR}/${SAMPLE_NAME}/01-quality_control"
 KRAKEN_TRIMMED_DIR="${RUN_DIR}/${SAMPLE_NAME}/02-kraken-trimmed"
 SPADES_DIR="${RUN_DIR}/${SAMPLE_NAME}/03-spades"
@@ -27,6 +37,9 @@ KRAKEN_DB="/home/igc-1/Documents/Tanzim/db/kraken2db/"
 GAMMA_HVDB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/HyperVirulence_20220414.fasta"
 GAMMA_ARDB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/ResGANNCBI_20230517_srst2.fasta"
 GAMMA_DBPF="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/PF-Replicons_20230504.fasta"
+DB_NAME_AR=$( echo ${GAMMA_ARDB} | sed 's:.*/::' | sed 's/.fasta//' )
+DB_NAME_HV=$( echo ${GAMMA_HVDB} | sed 's:.*/::' | sed 's/.fasta//' )
+DB_NAME_PF=$( echo ${GAMMA_DBPF} | sed 's:.*/::' | sed 's/.fasta//' )
 
 ZIPPED_SKETCH="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/REFSEQ_20230504_Bacteria_complete.msh.gz"
 MASH_DB=${ZIPPED_SKETCH%.gz}
@@ -37,3 +50,8 @@ TAXA="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/taxes_20230516.csv"
 MLST_DB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/mlst_db_20230728/db"
 
 NCBI_ASSEMBLY_STATS="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/NCBI_Assembly_stats_20230504.txt"
+
+# Conda location
+CONDA_LOCATION="/home/igc-1/anaconda3/etc/profile.d/conda.sh"
+
+# Conda environments

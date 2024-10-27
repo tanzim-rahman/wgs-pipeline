@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source /home/igc-1/anaconda3/etc/profile.d/conda.sh
+source ${CONDA_LOCATION}
 
 conda activate wgs
 
@@ -22,7 +22,7 @@ mash \
 
 mkdir -p ${MASH_DIR}/reference_dir
 
-./bin/phoenix/sort_and_prep_dist.sh \
+${WORK_DIR}/bin/phoenix/sort_and_prep_dist.sh \
     -a ${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa.gz \
     -x ${MASH_DIR}/${SAMPLE_NAME}_${MASH_DB_VERSION}.txt \
     -o ${MASH_DIR}/reference_dir
@@ -34,14 +34,14 @@ fastANI \
     --rl ${MASH_DIR}/${SAMPLE_NAME}_${MASH_DB_VERSION}_best_MASH_hits.txt \
     -o ${MASH_DIR}/${SAMPLE_NAME}_${MASH_DB_VERSION}.ani.txt
 
-./bin/phoenix/ANI_best_hit_formatter.sh \
+${WORK_DIR}/bin/phoenix/ANI_best_hit_formatter.sh \
     -a ${MASH_DIR}/${SAMPLE_NAME}_${MASH_DB_VERSION}.ani.txt \
     -n ${SAMPLE_NAME} \
     -d ${MASH_DB_VERSION}
 
 mv ${SAMPLE_NAME}_${MASH_DB_VERSION}.fastANI.txt ${MASH_DIR}/${SAMPLE_NAME}_${MASH_DB_VERSION}.fastANI.txt
 
-./bin/phoenix/determine_taxID.sh \
+${WORK_DIR}/bin/phoenix/determine_taxID.sh \
     -k ${KRAKEN_ASSEMBLY_DIR}/${SAMPLE_NAME}.kraken2_wtasmbld.summary.txt \
     -s ${SAMPLE_NAME} \
     -f ${MASH_DIR}/${SAMPLE_NAME}_${MASH_DB_VERSION}.fastANI.txt \

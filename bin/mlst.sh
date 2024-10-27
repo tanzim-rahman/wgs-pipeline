@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source /home/igc-1/anaconda3/etc/profile.d/conda.sh
+source ${CONDA_LOCATION}
 
 conda activate wgs
 
@@ -75,7 +75,7 @@ else
     :
 fi
 
-./bin/phoenix/fix_MLST2.py \
+${WORK_DIR}/bin/phoenix/fix_MLST2.py \
     --input ${MLST_DIR}/${SAMPLE_NAME}.tsv \
     --taxonomy ${MASH_DIR}/${SAMPLE_NAME}.tax \
     --mlst_database ${MLST_DB}

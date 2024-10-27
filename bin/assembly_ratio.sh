@@ -4,7 +4,7 @@ source config.sh
 
 mkdir -p ${ASSEMBLY_RATIO_DIR}
 
-./bin/phoenix/calculate_assembly_ratio.sh \
+${WORK_DIR}/bin/phoenix/calculate_assembly_ratio.sh \
     -d ${NCBI_ASSEMBLY_STATS} \
     -q ${QUAST_DIR}/report.tsv \
     -x ${MASH_DIR}/${SAMPLE_NAME}.tax \

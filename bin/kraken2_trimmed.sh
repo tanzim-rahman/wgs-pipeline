@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source /home/igc-1/anaconda3/etc/profile.d/conda.sh
+source ${CONDA_LOCATION}
 
 conda activate wgs
 
@@ -22,11 +22,11 @@ kraken2 \
 
 gzip ${KRAKEN_TRIMMED_DIR}/*.fasta
 
-./bin/phoenix/kreport2mpa.py \
+${WORK_DIR}/bin/phoenix/kreport2mpa.py \
     --report-file ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}.kraken2_trimmed.summary.txt \
     --output ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}_trimmed.mpa
 
-./bin/phoenix/kreport2krona.py \
+${WORK_DIR}/bin/phoenix/kreport2krona.py \
     --report ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}.kraken2_trimmed.summary.txt \
     --output ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}_trimmed.krona
 
@@ -34,7 +34,7 @@ ktImportText  \
     -o ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}_trimmed.krona.html \
     ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}_trimmed.krona
 
-./bin/phoenix/kraken2_best_hit.sh \
+${WORK_DIR}/bin/phoenix/kraken2_best_hit.sh \
     -i ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}.kraken2_trimmed.summary.txt \
     -q ${QC_DIR}/${SAMPLE_NAME}_trimmed_read_counts.txt \
     -n ${SAMPLE_NAME}

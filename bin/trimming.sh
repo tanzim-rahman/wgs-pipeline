@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source /home/igc-1/anaconda3/etc/profile.d/conda.sh
+source ${CONDA_LOCATION}
 
 conda activate busco
 
@@ -46,7 +46,7 @@ if [[ ! -s ${READ1} ]] && [[ ! -s ${READ2} ]]; then
 
     echo -e '{\n\t"summary": {\n\t\t"after_filtering": {\n\t\t\t"total_reads":0,\n\t\t\t"total_bases":0,\n\t\t\t"q20_bases":0,\n\t\t\t"q30_bases":0,\n\t\t\t"q20_rate":0,\n\t\t\t"q30_rate":0,\n\t\t\t"read1_mean_length":0,\n\t\t\t"gc_content":0\n\t\t}\n\t}\n}' > ${QC_DIR}/${SAMPLE_NAME}_singles.fastp.json
 
-    ./bin/phoenix/create_empty_fastp_json.sh -n ${SAMPLE_NAME}
+    ${WORK_DIR}/bin/phoenix/create_empty_fastp_json.sh -n ${SAMPLE_NAME}
 
     mv ${SAMPLE_NAME}_singles.fastp.json ${QC_DIR}/${SAMPLE_NAME}_singles.fastp.json
 
@@ -83,7 +83,7 @@ else
         2> ${QC_DIR}/${SAMPLE_NAME}.fastp.log
 fi
 
-./bin/phoenix/FastP_QC.py \
+${WORK_DIR}/bin/phoenix/FastP_QC.py \
     --trimmed_json ${QC_DIR}/${SAMPLE_NAME}.fastp.json \
     --single_json ${QC_DIR}/${SAMPLE_NAME}_singles.fastp.json \
     --name ${SAMPLE_NAME}

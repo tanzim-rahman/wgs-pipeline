@@ -23,7 +23,7 @@ def qual_stat(qstr):
             q20 += 1
     return q20, q30
 
-def stat(filename):
+def stat(filename, output_file):
 
     reader = fastq.read(filename)
     total_read_count = 0
@@ -39,19 +39,20 @@ def stat(filename):
         q20_count += q20
         q30_count += q30
 
-    print("total reads:", total_read_count)
-    print("total bases:", total_base_count)
-    print("q20 bases:", q20_count)
-    print("q30 bases:", q30_count)
-    print("q20 percents:", 100 * float(q20_count)/float(total_base_count))
-    print("q30 percents:", 100 * float(q30_count)/float(total_base_count))
+    with open(output_file, 'w') as file:
+        file.write(f'total reads: {total_read_count}\n')
+        file.write(f'total bases: {total_base_count}\n')
+        file.write(f'q20 bases: {q20_count}\n')
+        file.write(f'q30 bases: {q30_count}\n')
+        file.write(f'q20 percents: {100 * float(q20_count)/float(total_base_count)}\n')
+        file.write(f'q30 percents: {100 * float(q30_count)/float(total_base_count)}')
 
 def main():
 
-    if len(sys.argv) < 2:
-        print("usage: python q30.py <fastq_file>")
+    if len(sys.argv) < 3:
+        print("usage: python q30.py <fastq_file> <output_file>")
         sys.exit(1)
-    stat(sys.argv[1])
+    stat(sys.argv[1], sys.argv[2])
 
 if __name__ == "__main__":
     time1 = time.time()

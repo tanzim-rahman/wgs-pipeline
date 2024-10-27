@@ -3,4 +3,7 @@ runs
 raw-data
 results
 samplesheet.csv
-times.txt
+times_*.txt
+test*
+temp*
+flowchart.drawio

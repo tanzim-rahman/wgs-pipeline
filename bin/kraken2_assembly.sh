@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source /home/igc-1/anaconda3/etc/profile.d/conda.sh
+source ${CONDA_LOCATION}
 
 conda activate wgs
 
@@ -20,17 +20,17 @@ kraken2 \
 
 gzip ${KRAKEN_ASSEMBLY_DIR}/*.fasta
 
-./bin/phoenix/make_kreport.py \
+${WORK_DIR}/bin/phoenix/make_kreport.py \
     --input ${KRAKEN_ASSEMBLY_DIR}/${SAMPLE_NAME}.kraken2_wtasmbld.classifiedreads.txt \
     --output ${KRAKEN_ASSEMBLY_DIR}/${SAMPLE_NAME}.kraken2_wtasmbld.summary.txt \
     --taxonomy ${KRAKEN_DB}/ktaxonomy.tsv \
     --use-read-len
 
-./bin/phoenix/kreport2krona.py \
+${WORK_DIR}/bin/phoenix/kreport2krona.py \
     --report ${KRAKEN_ASSEMBLY_DIR}/${SAMPLE_NAME}.kraken2_wtasmbld.summary.txt \
     --output ${KRAKEN_ASSEMBLY_DIR}/${SAMPLE_NAME}_wtasmbld.krona
 
-./bin/phoenix/kraken2_best_hit.sh \
+${WORK_DIR}/bin/phoenix/kraken2_best_hit.sh \
     -i ${KRAKEN_ASSEMBLY_DIR}/${SAMPLE_NAME}.kraken2_wtasmbld.summary.txt \
     -q ${QUAST_DIR}/report.tsv \
     -n ${SAMPLE_NAME}

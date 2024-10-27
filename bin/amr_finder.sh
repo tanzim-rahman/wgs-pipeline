@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source /home/igc-1/anaconda3/etc/profile.d/conda.sh
+source ${CONDA_LOCATION}
 
 conda activate wgs
 
@@ -19,7 +19,7 @@ prokka \
 
 gzip ${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa
 
-./bin/phoenix/get_taxa_for_amrfinder.py -t ${MASH_DIR}/${SAMPLE_NAME}.tax -o ${AMR_DIR}/${SAMPLE_NAME}_AMRFinder_Organism.csv
+${WORK_DIR}/bin/phoenix/get_taxa_for_amrfinder.py -t ${MASH_DIR}/${SAMPLE_NAME}.tax -o ${AMR_DIR}/${SAMPLE_NAME}_AMRFinder_Organism.csv
 
 conda deactivate
 
