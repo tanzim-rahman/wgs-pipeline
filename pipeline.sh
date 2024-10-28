@@ -93,7 +93,7 @@ sed 1d ${SAMPLE_SHEET} | while read -r LINE || [ -n "${LINE}" ]; do
     echo "Total: ${total_runtime}" >> times_${RUN_NAME}.txt
 
     echo "" >> times_${RUN_NAME}.txt
-    fi
+
 done
 
 STATS_CPU=15
