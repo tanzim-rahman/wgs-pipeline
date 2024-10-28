@@ -6,7 +6,7 @@ echo `date -I'seconds'` >> times_${RUN_NAME}.txt
 echo "" >> times_${RUN_NAME}.txt
 
 global_start=`date +%s`
-sed 1d ${SAMPLE_SHEET} | while read -r LINE || [ -n "${LINE}" ]; do
+sed 1d ${SAMPLESHEET} | while read -r LINE || [ -n "${LINE}" ]; do
 
     SAMPLE_NAME=$( echo ${LINE} | cut -f 1 -d ',' )
     export SAMPLE_NAME
@@ -97,7 +97,7 @@ sed 1d ${SAMPLE_SHEET} | while read -r LINE || [ -n "${LINE}" ]; do
 done
 
 STATS_CPU=15
-TOTAL_SAMPLES=$( cat ${SAMPLE_SHEET} | wc -l )
+TOTAL_SAMPLES=$( cat ${SAMPLESHEET} | wc -l )
 TOTAL_SAMPLES=$(( TOTAL_SAMPLES - 1 ))
 PROCESS_SAMPLES=$(( TOTAL_SAMPLES_SAMPLES / STATS_CPU + 1 ))
 
@@ -125,7 +125,7 @@ mv ${RUN_DIR}/*/11-stats/*_summaryline.tsv ${RESULTS_DIR}/summary
 
     ${WORK_DIR}/bin/phoenix/GRiPHin.py \
         -r ${RUN_DIR} \
-        -s ${SAMPLE_SHEET} \
+        -s ${SAMPLESHEET} \
         -a ${GAMMA_ARDB} \
         --output ${RESULTS_DIR}/summary/${RUN_NAME}_GRiPHin_Summary.xlsx \
         --coverage 30 \

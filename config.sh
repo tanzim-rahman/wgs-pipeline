@@ -5,7 +5,7 @@
 # Name for the current run.
 RUN_NAME=""
 # Location of the samplesheet file that contains sample information.
-SAMPLE_SHEET=""
+SAMPLESHEET=""
 
 # Directory where the pipeline.sh file as well as the bin folder is located.
 WORK_DIR="$( pwd )"

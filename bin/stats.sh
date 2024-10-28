@@ -6,7 +6,7 @@ source ${CONDA_LOCATION}
 
 conda activate ${CONDA_ENV_STATS}
 
-cat ${SAMPLE_SHEET} | tail -n +$1 | head -n $2 | while read LINE || [ -n "${LINE}" ]; do
+cat ${SAMPLESHEET} | tail -n +$1 | head -n $2 | while read LINE || [ -n "${LINE}" ]; do
 
     SAMPLE_NAME=$( echo ${LINE} | cut -f 1 -d ',' )
     export SAMPLE_NAME
