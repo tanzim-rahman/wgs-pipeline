@@ -18,7 +18,7 @@ It has been converted from a parallel pipeline using [NextFlow](https://www.next
 
 5. [Workflow overview](#workflow-overview)
 
-## Prerequirements
+## Prerequisites
 
 - [Anaconda](https://www.anaconda.com)
 
