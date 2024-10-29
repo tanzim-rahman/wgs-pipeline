@@ -54,17 +54,17 @@ It has been converted from a parallel pipeline that uses [NextFlow](https://www.
 
 1. Clone the repository.
 
-    `git clone https://github.com/tanzim-rahman/wgs-pipeline.git`
+        git clone https://github.com/tanzim-rahman/wgs-pipeline.git
 
 2. *[OPTIONAL]* Create a samplesheet file. See Section *Samplesheet format* for more details.
 
 3. *[OPTIONAL]* Edit the *config.sh* file to set all run parameters.
 
-4. Run the *wgs-pipeline.sh* file using
-```
-./wgs-pipeline.sh [OPTIONS]
-```
-Options that are **NOT** provided will be automatically imported from the *config.sh* file.
+4. Run the *wgs-pipeline.sh* file.
+
+        ./wgs-pipeline.sh [OPTIONS]
+
+    Options that are **NOT** provided will be automatically imported from the *config.sh* file.
 
 ### Command line arguments
 
