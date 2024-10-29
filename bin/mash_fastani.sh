@@ -8,10 +8,12 @@ conda activate ${CONDA_ENV_MASH}
 
 mkdir -p ${MASH_DIR}
 
-if [[ ${ZIPPED_SKETCH} = *.gz ]]; then
-    pigz -vdf ${ZIPPED_SKETCH}
-else
-    :
+if [[ ! -f ${MASH_DB} ]]; then
+    if [[ ${ZIPPED_SKETCH} = *.gz ]]; then
+        pigz -vdf ${ZIPPED_SKETCH}
+    else
+        :
+    fi
 fi
 
 mash \
