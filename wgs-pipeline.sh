@@ -11,7 +11,7 @@ show_help() {
     printf "    %-35s|    %s\n" "-w/--work_dir DIR" "Working directory. Must contain wgs-pipeline.sh, config.sh and the bin directory."
     printf "    %-35s|    %s\n" "-s/--samplesheet FILE" "Path to samplesheet file. If --generate_samplesheet DIR is provided, this samplesheet file is automatically created from the samples contained in DIR directory."
     printf "    %-35s|    %s\n" "-g/--generate_samplesheet DIR" "Automatically generates a samplesheet file using the DIR directory and saves to -s/--samplesheet FILE. The samples in DIR must have the extension fastq.gz or fq.gz and must contain either _R1/_R2 or _1/_2 in their names to distinguish between reads."
-    printf "    %-35s|    %s\n" "-r/--results_dir" "Directory where the run results will be stored."
+    printf "    %-35s|    %s\n" "-r/--results_dir DIR" "Directory where the run results will be stored."
     echo "REFERENCES AND DATABASES"
     printf "    %-35s|    %s\n" "--bbduk_ref FILE" "Path to BBDUK reference file."
     printf "    %-35s|    %s\n" "--kraken2_db DIR" "Path to Kraken2 DB directory."
@@ -20,16 +20,31 @@ show_help() {
     printf "    %-35s|    %s\n" "--gamme_pf FILE" "Path to GAMMA PlasmidFinder reference file."
     printf "    %-35s|    %s\n" "--mash_db FILE" "Path to MASH sketch file. May be gzipped."
     printf "    %-35s|    %s\n" "--taxa FILE" "Path to taxinomy reference file."
-    printf "    %-35s|    %s\n" "--mlst_db DIR/GZ" "Path to MLST DB directory or gzipped file."
+    printf "    %-35s|    %s\n" "--mlst_db DIR/FILE" "Path to MLST DB directory or gzipped file."
     printf "    %-35s|    %s\n" "--assembly_stats FILE" "Path to assembly stats file."
     echo "CONDA ENVIRONMENTS"
     printf "    %-35s|    %s\n" "--conda FILE" "Location of the conda.sh file."
-    printf "    %-35s|    %s\n" "--conda_{program} NAME" "Name of the conda environment that contains {program}."
-    printf "    %-35s|    %s\n" "PROGRAMS: all, bbduk, fastp, fastqc, kraken2, kronatools, spades, gamma, quast, mash, fastani, mlst, prokka, amrfinder, stats."
-    echo "NOTE: --conda_{program} is position-dependent, i.e., including --conda_all will be overwritten if there is another --conda_{program} AFTER it."
+    printf "    %-35s|    %s\n" "--conda_all NAME" "Set the name of the conda environment containing all programs."
+    printf "    %-35s|    %s\n" "--conda_PROGRAM NAME" "Name of the conda environment that contains PROGRAM. Overwrites --conda_all."
+    echo "    PROGRAM options: bbduk, fastp, fastqc, kraken2, kronatools, spades, gamma, quast, mash, fastani, mlst, prokka, amrfinder, stats."
 }
 
 source config.sh
+
+CONDA_ENV_BBMAP_SET=false
+CONDA_ENV_FASTP_SET=false
+CONDA_ENV_FASTQC_SET=false
+CONDA_ENV_KRAKEN2_SET=false
+CONDA_ENV_KRONATOOLS_SET=false
+CONDA_ENV_SPADES_SET=false
+CONDA_ENV_GAMMA_SET=false
+CONDA_ENV_QUAST_SET=false
+CONDA_ENV_MASH_SET=false
+CONDA_ENV_FASTANI_SET=false
+CONDA_ENV_MLST_SET=false
+CONDA_ENV_PROKKA_SET=false
+CONDA_ENV_AMRFINDER_SET=false
+CONDA_ENV_STATS_SET=false
 
 VALID_ARGS=$(getopt -o hn:w:s:g:r: --long help,run_name:,work_dir:,samplesheet:,generate_samplesheet:,results_dir:,bbduk_ref:,kraken2_db:,gamma_hv:,gamma_ar:,gamma_pf:,mash_db:,taxa_ref:,mlst_db:,assembly_stats:,conda_path:,conda_all:,conda_bbmap:,conda_fastp:,conda_fastqc:,conda_kraken2:,conda_kronatools:,conda_spades:,conda_gamma:,conda_quast:,conda_mash:,conda_fastani:,conda_mlst:,conda_prokka:,conda_amrfinder:,conda_stats: -- "$@")
 if [[ $? -ne 0 ]]; then
@@ -111,76 +126,118 @@ while [ : ]; do
             shift 2
             ;;
         --conda_all)
-            CONDA_ENV_BBMAP="$2"
-            CONDA_ENV_FASTP="$2"
-            CONDA_ENV_FASTQC="$2"
-            CONDA_ENV_KRAKEN2="$2"
-            CONDA_ENV_KRONATOOLS="$2"
-            CONDA_ENV_SPADES="$2"
-            CONDA_ENV_GAMMA="$2"
-            CONDA_ENV_QUAST="$2"
-            CONDA_ENV_MASH="$2"
-            CONDA_ENV_FASTANI="$2"
-            CONDA_ENV_MLST="$2"
-            CONDA_ENV_PROKKA="$2"
-            CONDA_ENV_AMRFINDER="$2"
-            CONDA_ENV_STATS="$2"
+            if [ "${CONDA_ENV_BBMAP_SET}" = false ]; then
+                CONDA_ENV_BBMAP="$2"
+            fi
+            if [ "${CONDA_ENV_FASTP_SET}" = false ]; then
+                CONDA_ENV_FASTP="$2"
+            fi
+            if [ "${CONDA_ENV_FASTQC_SET}" = false ]; then
+                CONDA_ENV_FASTQC="$2"
+            fi
+            if [ "${CONDA_ENV_KRAKEN2_SET}" = false ]; then
+                CONDA_ENV_KRAKEN2="$2"
+            fi
+            if [ "${CONDA_ENV_KRONATOOLS_SET}" = false ]; then
+                CONDA_ENV_KRONATOOLS="$2"
+            fi
+            if [ "${CONDA_ENV_SPADES_SET}" = false ]; then
+                CONDA_ENV_SPADES="$2"
+            fi
+            if [ "${CONDA_ENV_GAMMA_SET}" = false ]; then
+                CONDA_ENV_GAMMA="$2"
+            fi
+            if [ "${CONDA_ENV_QAUST_SET}" = false ]; then
+                CONDA_ENV_QUAST="$2"
+            fi
+            if [ "${CONDA_ENV_MASH_SET}" = false ]; then
+                CONDA_ENV_MASH="$2"
+            fi
+            if [ "${CONDA_ENV_FASTANI_SET}" = false ]; then
+                CONDA_ENV_FASTANI="$2"
+            fi
+            if [ "${CONDA_ENV_MLST_SET}" = false ]; then
+                CONDA_ENV_MLST="$2"
+            fi
+            if [ "${CONDA_ENV_PROKKA_SET}" = false ]; then
+                CONDA_ENV_PROKKA="$2"
+            fi
+            if [ "${CONDA_ENV_AMRFINDER_SET}" = false ]; then
+                CONDA_ENV_AMRFINDER="$2"
+            fi
+            if [ "${CONDA_ENV_STATS_SET}" = false ]; then
+                CONDA_ENV_STATS="$2"
+            fi
             shift 2
             ;;
         --conda_bbmap)
             CONDA_ENV_BBMAP="$2"
+            CONDA_ENV_BBMAP_SET=true
             shift 2
             ;;
         --conda_fastp)
             CONDA_ENV_FASTP="$2"
+            CONDA_ENV_FASTP_SET=true
             shift 2
             ;;
         --conda_fastqc)
             CONDA_ENV_FASTQC="$2"
+            CONDA_ENV_FASTQC_SET=true
             shift 2
             ;;
         --conda_kraken2)
             CONDA_ENV_KRAKEN2="$2"
+            CONDA_ENV_KRAKEN2_SET=true
             shift 2
             ;;
         --conda_kronatools)
             CONDA_ENV_KRONATOOLS="$2"
+            CONDA_ENV_KRONATOOLS_SET=true
             shift 2
             ;;
         --conda_spades)
             CONDA_ENV_SPADES="$2"
+            CONDA_ENV_SPADES_SET=true
             shift 2
             ;;
         --conda_gamma)
             CONDA_ENV_GAMMA="$2"
+            CONDA_ENV_GAMMA_SET=true
             shift 2
             ;;
         --conda_quast)
             CONDA_ENV_QUAST="$2"
+            CONDA_ENV_QUAST_SET=true
             shift 2
             ;;
         --conda_mash)
             CONDA_ENV_MASH="$2"
+            CONDA_ENV_MASH_SET=true
             shift 2
             ;;
         --conda_fastani)
             CONDA_ENV_FASTANI="$2"
+            CONDA_ENV_FASTANI_SET=true
             shift 2
             ;;
         --conda_mlst)
             CONDA_ENV_MLST="$2"
+            CONDA_ENV_MLST_SET=true
             shift 2
             ;;
         --conda_prokka)
             CONDA_ENV_PROKKA="$2"
+            CONDA_ENV_PROKKA_SET=true
             shift 2
             ;;
         --conda_amrfinder)
             CONDA_ENV_AMRFINDER="$2"
+            CONDA_ENV_AMRFINDER_SET=true
             shift 2
             ;;
         --conda_stats)
             CONDA_ENV_STATS="$2"
+            CONDA_ENV_STATS_SET=true
             shift 2
             ;;
         --) shift; 
