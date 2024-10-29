@@ -46,6 +46,9 @@ CONDA_ENV_PROKKA_SET=false
 CONDA_ENV_AMRFINDER_SET=false
 CONDA_ENV_STATS_SET=false
 
+GENERATE_SAMPLESHEET=false
+RAW_DATA_LOCATION=""
+
 VALID_ARGS=$(getopt -o hn:w:s:g:r: --long help,run_name:,work_dir:,samplesheet:,generate_samplesheet:,results_dir:,bbduk_ref:,kraken2_db:,gamma_hv:,gamma_ar:,gamma_pf:,mash_db:,taxa_ref:,mlst_db:,assembly_stats:,conda_path:,conda_all:,conda_bbmap:,conda_fastp:,conda_fastqc:,conda_kraken2:,conda_kronatools:,conda_spades:,conda_gamma:,conda_quast:,conda_mash:,conda_fastani:,conda_mlst:,conda_prokka:,conda_amrfinder:,conda_stats: -- "$@")
 if [[ $? -ne 0 ]]; then
     exit 1;
@@ -71,7 +74,8 @@ while [ : ]; do
             shift 2
             ;;
         -g | --generate_samplesheet)
-            ${WORK_DIR}/bin/generate_samplesheet.sh -d "$2" -s ${SAMPLESHEET}
+            GENERATE_SAMPLESHEET=true
+            RAW_DATA_LOCATION="$2"
             shift 2
             ;;
         -r | --results_dir)
@@ -244,6 +248,10 @@ while [ : ]; do
             ;;
     esac
 done
+
+if [ "${GENERATE_SAMPLESHEET}" = true ]; then
+    ${WORK_DIR}/bin/generate_samplesheet.sh -d "${RAW_DATA_LOCATION}" -s ${SAMPLESHEET}
+fi
 
 # echo "RUN DETAILS"
 # printf "%-20s:    %s\n" "RUN NAME" "${RUN_NAME}"
