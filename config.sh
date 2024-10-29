@@ -7,7 +7,7 @@ RUN_NAME="birdem"
 # Location of the samplesheet file that contains sample information.
 SAMPLESHEET="/home/igc-1/Documents/Tanzim/phoenix-pipeline/samplesheet.csv"
 
-# Directory where the pipeline.sh file as well as the bin folder is located.
+# Directory where the wgs-pipeline.sh and config.sh files as well as the bin folder is located.
 WORK_DIR="/home/igc-1/Documents/Tanzim/phoenix-pipeline"
 # Directory where the results and final run summary will be stored.
 RESULTS_DIR="${WORK_DIR}/results/birdem"

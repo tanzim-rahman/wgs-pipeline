@@ -3,15 +3,15 @@
 show_help() {
     echo "Pipeline for short read genomic analysis."
     echo "USAGE ./wgs-pipeline.sh [OPTIONS]"
-    echo "If options are not provided as arguments, default values are taken from config.sh."
+    echo "If options are not provided as arguments, default values are imported from config.sh."
     echo "Paths must not end with a '/' and should be provided in their full form."
     echo "OPTIONS"
     printf "    %-35s|    %s\n" "-h/--help" "Show help."
     printf "    %-35s|    %s\n" "-n/--run_name NAME" "Name of current run."
-    printf "    %-35s|    %s\n" "-w/--work_dir DIR" "Working directory. Must contain wgs-pipeline.sh, config.sh and the bin directory."
-    printf "    %-35s|    %s\n" "-s/--samplesheet FILE" "Path to samplesheet file. If --generate_samplesheet DIR is provided, this samplesheet file is automatically created from the samples contained in DIR directory."
+    printf "    %-35s|    %s\n" "-w/--work_dir DIR" "Working directory. Must contain the wgs-pipeline.sh and config.sh files as well as the bin directory."
+    printf "    %-35s|    %s\n" "-s/--samplesheet FILE" "Full path to the samplesheet file. If --generate_samplesheet DIR is provided, this samplesheet file is automatically created from the samples contained in DIR directory."
     printf "    %-35s|    %s\n" "-g/--generate_samplesheet DIR" "Automatically generates a samplesheet file using the DIR directory and saves to -s/--samplesheet FILE. The samples in DIR must have the extension fastq.gz or fq.gz and must contain either _R1/_R2 or _1/_2 in their names to distinguish between reads."
-    printf "    %-35s|    %s\n" "-r/--results_dir DIR" "Directory where the run results will be stored."
+    printf "    %-35s|    %s\n" "-r/--results_dir DIR" "Directory where the run results will be stored. Indiviual sample results are stored in DIR/runs/{sample_name}/ while the final summary results are stored in DIR/summary/."
     echo "REFERENCES AND DATABASES"
     printf "    %-35s|    %s\n" "--bbduk_ref FILE" "Path to BBDUK reference file."
     printf "    %-35s|    %s\n" "--kraken2_db DIR" "Path to Kraken2 DB directory."
@@ -23,9 +23,9 @@ show_help() {
     printf "    %-35s|    %s\n" "--mlst_db DIR/FILE" "Path to MLST DB directory or gzipped file."
     printf "    %-35s|    %s\n" "--assembly_stats FILE" "Path to assembly stats file."
     echo "CONDA ENVIRONMENTS"
-    printf "    %-35s|    %s\n" "--conda FILE" "Location of the conda.sh file."
-    printf "    %-35s|    %s\n" "--conda_all NAME" "Set the name of the conda environment containing all programs."
-    printf "    %-35s|    %s\n" "--conda_PROGRAM NAME" "Name of the conda environment that contains PROGRAM. Overwrites --conda_all."
+    printf "    %-35s|    %s\n" "--conda FILE" "Location of the conda.sh file. This is used in order to activate conda environments."
+    printf "    %-35s|    %s\n" "--conda_all NAME" "Sets the name of the conda environment containing all programs to NAME."
+    printf "    %-35s|    %s\n" "--conda_PROGRAM NAME" "Sets the name of the conda environment that contains PROGRAM to NAME. Overwrites --conda_all."
     echo "    PROGRAM options: bbduk, fastp, fastqc, kraken2, kronatools, spades, gamma, quast, mash, fastani, mlst, prokka, amrfinder, stats."
 }
 
@@ -71,7 +71,6 @@ while [ : ]; do
             shift 2
             ;;
         -g | --generate_samplesheet)
-            RUN_NAME="$2"
             ${WORK_DIR}/bin/generate_samplesheet.sh -d "$2" -s ${SAMPLESHEET}
             shift 2
             ;;
@@ -432,7 +431,7 @@ sed 1d ${SAMPLESHEET} | while read -r LINE || [ -n "${LINE}" ]; do
 
     echo "" >> times_${RUN_NAME}.txt
 
-done
+; done
 
 STATS_CPU=15
 TOTAL_SAMPLES=$( cat ${SAMPLESHEET} | wc -l )
