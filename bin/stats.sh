@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source config.sh
-
 source ${CONDA_LOCATION}
 
 conda activate ${CONDA_ENV_STATS}
@@ -9,11 +7,20 @@ conda activate ${CONDA_ENV_STATS}
 cat ${SAMPLESHEET} | tail -n +$1 | head -n $2 | while read LINE || [ -n "${LINE}" ]; do
 
     SAMPLE_NAME=$( echo ${LINE} | cut -f 1 -d ',' )
-    export SAMPLE_NAME
     READ_R1=$( echo ${LINE} | cut -f 2 -d ',' )
     READ_R2=$( echo ${LINE} | cut -f 3 -d ',' )
 
-    source config.sh
+    QC_DIR="${RUN_DIR}/${SAMPLE_NAME}/01-quality_control"
+    KRAKEN_TRIMMED_DIR="${RUN_DIR}/${SAMPLE_NAME}/02-kraken-trimmed"
+    SPADES_DIR="${RUN_DIR}/${SAMPLE_NAME}/03-spades"
+    GAMMA_DIR="${RUN_DIR}/${SAMPLE_NAME}/04-gamma"
+    QUAST_DIR="${RUN_DIR}/${SAMPLE_NAME}/05-quast"
+    KRAKEN_ASSEMBLY_DIR="${RUN_DIR}/${SAMPLE_NAME}/06-kraken-assembly"
+    MASH_DIR="${RUN_DIR}/${SAMPLE_NAME}/07-mash-fastani"
+    MLST_DIR="${RUN_DIR}/${SAMPLE_NAME}/08-mlst"
+    AMR_DIR="${RUN_DIR}/${SAMPLE_NAME}/09-amr"
+    ASSEMBLY_RATIO_DIR="${RUN_DIR}/${SAMPLE_NAME}/10-assembly-ratio"
+    STATS_DIR="${RUN_DIR}/${SAMPLE_NAME}/11-stats"
 
     ${WORK_DIR}/bin/phoenix/q30.py ${READ_R1} ${SAMPLE_NAME}_R1_stats.txt &
     ${WORK_DIR}/bin/phoenix/q30.py ${READ_R2} ${SAMPLE_NAME}_R2_stats.txt &

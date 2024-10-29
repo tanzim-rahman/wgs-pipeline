@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source config.sh
-
 mkdir -p ${ASSEMBLY_RATIO_DIR}
 
 ${WORK_DIR}/bin/phoenix/calculate_assembly_ratio.sh \

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source config.sh
-
 source ${CONDA_LOCATION}
 
 conda activate ${CONDA_ENV_MASH}
