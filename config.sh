@@ -3,16 +3,14 @@
 # NOTE: Directory names must NOT end with a "/"
 
 # Name for the current run.
-RUN_NAME=""
+RUN_NAME="birdem"
 # Location of the samplesheet file that contains sample information.
-SAMPLESHEET=""
+SAMPLESHEET="/home/igc-1/Documents/Tanzim/phoenix-pipeline/samplesheet.csv"
 
 # Directory where the pipeline.sh file as well as the bin folder is located.
-WORK_DIR="$( pwd )"
-# Directory where the results directory will be stored. This can be the same directory that contains the input FastQ files.
-ROOT_DIR=""
+WORK_DIR="/home/igc-1/Documents/Tanzim/phoenix-pipeline"
 # Directory where the results and final run summary will be stored.
-RESULTS_DIR="${ROOT_DIR}/results"
+RESULTS_DIR="${WORK_DIR}/results/birdem"
 # Directory where the run outputs of each sample will be stored.
 RUN_DIR="${RESULTS_DIR}/runs"
 
@@ -30,42 +28,42 @@ ASSEMBLY_RATIO_DIR="${RUN_DIR}/${SAMPLE_NAME}/10-assembly-ratio"
 STATS_DIR="${RUN_DIR}/${SAMPLE_NAME}/11-stats"
 
 # Databases
-BBDUK_REF=""
+BBDUK_REF="/home/igc-1/anaconda3/envs/wgs/opt/bbmap-39.01-1/resources/adapters.fa"
 
-KRAKEN_DB=""
+KRAKEN_DB="/home/igc-1/Documents/Tanzim/db/kraken2db"
 
-GAMMA_HVDB=""
-GAMMA_ARDB=""
-GAMMA_DBPF=""
+GAMMA_HVDB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/HyperVirulence_20220414.fasta"
+GAMMA_ARDB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/ResGANNCBI_20230517_srst2.fasta"
+GAMMA_DBPF="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/PF-Replicons_20230504.fasta"
 DB_NAME_AR=$( echo ${GAMMA_ARDB} | sed 's:.*/::' | sed 's/.fasta//' )
 DB_NAME_HV=$( echo ${GAMMA_HVDB} | sed 's:.*/::' | sed 's/.fasta//' )
 DB_NAME_PF=$( echo ${GAMMA_DBPF} | sed 's:.*/::' | sed 's/.fasta//' )
 
-ZIPPED_SKETCH=""
+ZIPPED_SKETCH="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/REFSEQ_20230504_Bacteria_complete.msh.gz"
 MASH_DB=${ZIPPED_SKETCH%.gz}
 MASH_DB_VERSION=$( echo ${MASH_DB##*/} | cut -d '_' -f1,2 )
 
-TAXA=""
+TAXA="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/taxes_20230516.csv"
 
-MLST_DB=""
+MLST_DB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/mlst_db_20230728/db"
 
-NCBI_ASSEMBLY_STATS=""
+NCBI_ASSEMBLY_STATS="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/NCBI_Assembly_stats_20230504.txt"
 
 # Conda location
-CONDA_LOCATION=""
+CONDA_LOCATION="/home/igc-1/anaconda3/etc/profile.d/conda.sh"
 
 # Conda environments
-CONDA_ENV_BBMAP=""
-CONDA_ENV_FASTP=""
-CONDA_ENV_FASTQC=""
-CONDA_ENV_KRAKEN2=""
-CONDA_ENV_KRONATOOLS=""
-CONDA_ENV_SPADES=""
-CONDA_ENV_GAMMA=""
-CONDA_ENV_QUAST=""
-CONDA_ENV_MASH=""
-CONDA_ENV_FASTANI=""
-CONDA_ENV_MLST=""
-CONDA_ENV_PROKKA=""
-CONDA_ENV_AMRFINDER=""
-CONDA_ENV_STATS=""
+CONDA_ENV_BBMAP="wgs"
+CONDA_ENV_FASTP="wgs"
+CONDA_ENV_FASTQC="wgs"
+CONDA_ENV_KRAKEN2="wgs"
+CONDA_ENV_KRONATOOLS="wgs"
+CONDA_ENV_SPADES="wgs"
+CONDA_ENV_GAMMA="wgs"
+CONDA_ENV_QUAST="wgs"
+CONDA_ENV_MASH="wgs"
+CONDA_ENV_FASTANI="wgs"
+CONDA_ENV_MLST="wgs"
+CONDA_ENV_PROKKA="wgs"
+CONDA_ENV_AMRFINDER="amrfinder"
+CONDA_ENV_STATS="wgs"

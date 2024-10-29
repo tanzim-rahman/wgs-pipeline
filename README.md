@@ -56,11 +56,11 @@ It has been converted from a parallel pipeline using [NextFlow](https://www.next
 
     `git clone https://github.com/tanzim-rahman/wgs-pipeline.git`
 
-2. Create a samplesheet file. See Section *Samplesheet format* for more details.
+2. [OPTIONAL] Create a samplesheet file. See Section *Samplesheet format* for more details.
 
-3. Edit the *config.sh* file to set all run parameters.
+3. [OPTIONAL] Edit the *config.sh* file to set all run parameters.
 
-4. Run the *pipeline.sh* file.
+4. Run the *pipeline.sh* file. Options that are **NOT** provided will be automatically taken from the *config.sh* file.
 
 ## Samplesheet format
 
