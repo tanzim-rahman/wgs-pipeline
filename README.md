@@ -69,7 +69,7 @@ Options that are **NOT** provided will be automatically imported from the *confi
 ### Command line arguments
 
 - -h/--help
-    - Show the help dialog.
+    - Shows the help dialog.
 - -n/--run_name **NAME**
     - Sets the name of the current run to **NAME**. Final GRiPHin summary file has this prefix.
 - -w/--work_dir **DIR**
@@ -106,9 +106,9 @@ The reads must be in gzipped FastQ format and have either *.fastq.gz* or *.fq.gz
 
 ## Files and directories
 
-- **bin**: contains the scripts used in the pipeline.
+- **bin**: Contains the scripts used in the pipeline.
 
-- **bin/phoenix**: contains scripts taken directly from the *Phoenix* pipeline. Some files have been modified slightly in order to avoid compatibility issues.
+- **bin/phoenix**: Contains scripts taken directly from the *Phoenix* pipeline. Some files have been modified slightly in order to avoid compatibility issues.
 
 - **config.sh**: Contains the run parameters. Must be set before the pipeline is run.
 

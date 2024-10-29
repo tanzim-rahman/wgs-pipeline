@@ -6,7 +6,7 @@ show_help() {
     echo "If options are not provided as arguments, default values are imported from config.sh."
     echo "Paths must not end with a '/' and should be provided in their full form."
     echo "OPTIONS"
-    printf "    %-35s|    %s\n" "-h/--help" "Show help."
+    printf "    %-35s|    %s\n" "-h/--help" "Shows the help dialog."
     printf "    %-35s|    %s\n" "-n/--run_name NAME" "Name of current run."
     printf "    %-35s|    %s\n" "-w/--work_dir DIR" "Working directory. Must contain the wgs-pipeline.sh and config.sh files as well as the bin directory."
     printf "    %-35s|    %s\n" "-s/--samplesheet FILE" "Full path to the samplesheet file. If --generate_samplesheet DIR is provided, this samplesheet file is automatically created from the samples contained in DIR directory."
