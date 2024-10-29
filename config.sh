@@ -34,10 +34,10 @@ KRAKEN_DB="/home/igc-1/Documents/Tanzim/db/kraken2db"
 
 GAMMA_HVDB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/HyperVirulence_20220414.fasta"
 GAMMA_ARDB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/ResGANNCBI_20230517_srst2.fasta"
-GAMMA_DBPF="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/PF-Replicons_20230504.fasta"
+GAMMA_PFDB="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/PF-Replicons_20230504.fasta"
 DB_NAME_AR=$( echo ${GAMMA_ARDB} | sed 's:.*/::' | sed 's/.fasta//' )
 DB_NAME_HV=$( echo ${GAMMA_HVDB} | sed 's:.*/::' | sed 's/.fasta//' )
-DB_NAME_PF=$( echo ${GAMMA_DBPF} | sed 's:.*/::' | sed 's/.fasta//' )
+DB_NAME_PF=$( echo ${GAMMA_PFDB} | sed 's:.*/::' | sed 's/.fasta//' )
 
 ZIPPED_SKETCH="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/REFSEQ_20230504_Bacteria_complete.msh.gz"
 MASH_DB=${ZIPPED_SKETCH%.gz}

@@ -84,8 +84,8 @@ while [ : ]; do
             shift 2
             ;;
         --gamma_pf)
-            GAMMA_DBPF="$2"
-            DB_NAME_PF=$( echo ${GAMMA_DBPF} | sed 's:.*/::' | sed 's/.fasta//' )
+            GAMMA_PFDB="$2"
+            DB_NAME_PF=$( echo ${GAMMA_PFDB} | sed 's:.*/::' | sed 's/.fasta//' )
             shift 2
             ;;
         --mash_db)
@@ -201,7 +201,7 @@ done
 # printf "%-20s:    %s\n" "KRAKEN" "${KRAKEN_DB}"
 # printf "%-20s:    %s\n" "GAMMA HV" "${GAMMA_HVDB}"
 # printf "%-20s:    %s\n" "GAMMA AR" "${GAMMA_ARDB}"
-# printf "%-20s:    %s\n" "GAMMA PF" "${GAMMA_DBPF}"
+# printf "%-20s:    %s\n" "GAMMA PF" "${GAMMA_PFDB}"
 # printf "%-20s:    %s\n" "MASH" "${ZIPPED_SKETCH}"
 # printf "%-20s:    %s\n" "TAXA" "${TAXA}"
 # printf "%-20s:    %s\n" "MLST" "${MLST_DB}"
@@ -235,7 +235,7 @@ export GAMMA_HVDB
 export DB_NAME_HV
 export GAMMA_ARDB
 export DB_NAME_AR
-export GAMMA_DBPF
+export GAMMA_PFDB
 export DB_NAME_PF
 export ZIPPED_SKETCH
 export MASH_DB

@@ -24,7 +24,7 @@ GAMMA.py \
 
 GAMMA-S.py \
     ${FILE} \
-    ${GAMMA_DBPF} \
+    ${GAMMA_PFDB} \
     ${GAMMA_DIR}/${SAMPLE_NAME}_${DB_NAME_PF}
 
 gzip ${FILE}
