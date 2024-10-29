@@ -8,7 +8,7 @@ mkdir -p ${KRAKEN_TRIMMED_DIR}
 
 kraken2 \
     --db ${KRAKEN_DB} \
-    --threads 30 \
+    --threads ${THREADS} \
     --report ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}.kraken2_trimmed.summary.txt \
     --gzip-compressed \
     --unclassified-out ${KRAKEN_TRIMMED_DIR}/${SAMPLE_NAME}_trimmed.unclassified#.fasta \

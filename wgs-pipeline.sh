@@ -12,6 +12,8 @@ show_help() {
     printf "    %-35s|    %s\n" "-s/--samplesheet FILE" "Full path to the samplesheet file. If --generate_samplesheet DIR is provided, this samplesheet file is automatically created from the samples contained in DIR directory."
     printf "    %-35s|    %s\n" "-g/--generate_samplesheet DIR" "Automatically generates a samplesheet file using the DIR directory and saves to -s/--samplesheet FILE. The samples in DIR must have the extension fastq.gz or fq.gz and must contain either _R1/_R2 or _1/_2 in their names to distinguish between reads."
     printf "    %-35s|    %s\n" "-r/--results_dir DIR" "Directory where the run results will be stored. Indiviual sample results are stored in DIR/runs/{sample_name}/ while the final summary results are stored in DIR/summary/."
+    printf "    %-35s|    %s\n" "-t/--threads INT" "Number of CPU threads to use."
+    printf "    %-35s|    %s\n" "-m/--memory INT" "Maximum memory used by Spades."
     echo "REFERENCES AND DATABASES"
     printf "    %-35s|    %s\n" "--bbduk_ref FILE" "Path to BBDUK reference file."
     printf "    %-35s|    %s\n" "--kraken2_db DIR" "Path to Kraken2 DB directory."
@@ -49,7 +51,7 @@ CONDA_ENV_STATS_SET=false
 GENERATE_SAMPLESHEET=false
 RAW_DATA_LOCATION=""
 
-VALID_ARGS=$(getopt -o hn:w:s:g:r: --long help,run_name:,work_dir:,samplesheet:,generate_samplesheet:,results_dir:,bbduk_ref:,kraken2_db:,gamma_hv:,gamma_ar:,gamma_pf:,mash_db:,taxa_ref:,mlst_db:,assembly_stats:,conda_path:,conda_all:,conda_bbmap:,conda_fastp:,conda_fastqc:,conda_kraken2:,conda_kronatools:,conda_spades:,conda_gamma:,conda_quast:,conda_mash:,conda_fastani:,conda_mlst:,conda_prokka:,conda_amrfinder:,conda_stats: -- "$@")
+VALID_ARGS=$(getopt -o hn:w:s:g:r:t:m: --long help,run_name:,work_dir:,samplesheet:,generate_samplesheet:,results_dir:,threads:,memory:,bbduk_ref:,kraken2_db:,gamma_hv:,gamma_ar:,gamma_pf:,mash_db:,taxa_ref:,mlst_db:,assembly_stats:,conda_path:,conda_all:,conda_bbmap:,conda_fastp:,conda_fastqc:,conda_kraken2:,conda_kronatools:,conda_spades:,conda_gamma:,conda_quast:,conda_mash:,conda_fastani:,conda_mlst:,conda_prokka:,conda_amrfinder:,conda_stats: -- "$@")
 if [[ $? -ne 0 ]]; then
     exit 1;
 fi
@@ -74,13 +76,21 @@ while [ : ]; do
             shift 2
             ;;
         -g | --generate_samplesheet)
-            GENERATE_SAMPLESHEET=true
             RAW_DATA_LOCATION="$2"
+            GENERATE_SAMPLESHEET=true
             shift 2
             ;;
         -r | --results_dir)
             RESULTS_DIR="$2"
             RUN_DIR="${RESULTS_DIR}/runs"
+            shift 2
+            ;;
+        -t | --threads)
+            THREADS="$2"
+            shift 2
+            ;;
+        -m | --memory)
+            MEMORY="$2"
             shift 2
             ;;
         --bbduk_ref)
@@ -441,7 +451,7 @@ sed 1d ${SAMPLESHEET} | while read -r LINE || [ -n "${LINE}" ]; do
 
 ; done
 
-STATS_CPU=15
+STATS_CPU=$(( THREADS / 2 ))
 TOTAL_SAMPLES=$( cat ${SAMPLESHEET} | wc -l )
 TOTAL_SAMPLES=$(( TOTAL_SAMPLES - 1 ))
 PROCESS_SAMPLES=$(( TOTAL_SAMPLES_SAMPLES / STATS_CPU + 1 ))

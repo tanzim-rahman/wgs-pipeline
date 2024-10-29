@@ -9,7 +9,7 @@ mkdir -p ${AMR_DIR}
 gunzip ${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa.gz
 
 prokka \
-    --cpus 30 \
+    --cpus ${THREADS} \
     --prefix ${SAMPLE_NAME} \
     --outdir ${AMR_DIR}/prokka_outputs \
     --force \
@@ -39,7 +39,7 @@ amrfinder \
     --mutation_all ${AMR_DIR}/${SAMPLE_NAME}_all_mutations.tsv \
     $organism \
     --plus \
-    --threads 30 \
+    --threads ${THREADS} \
     > ${AMR_DIR}/${SAMPLE_NAME}_all_genes.tsv
 
 sed -i '1s/ /_/g' ${AMR_DIR}/${SAMPLE_NAME}_all_genes.tsv

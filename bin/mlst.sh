@@ -7,7 +7,7 @@ conda activate ${CONDA_ENV_MLST}
 mkdir -p ${MLST_DIR}
 
 mlst \
-    --threads 30 \
+    --threads ${THREADS} \
     ${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa.gz \
     > ${MLST_DIR}/${SAMPLE_NAME}.tsv
 
@@ -18,7 +18,7 @@ if [[ ${SCHEME} == "abaumannii_2" ]]; then
     
     mlst \
         --scheme abaumannii \
-        --threads 30 \
+        --threads ${THREADS} \
         ${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa.gz \
         > ${MLST_DIR}/${SAMPLE_NAME}_2.tsv
     
@@ -29,7 +29,7 @@ elif [[ ${SCHEME} == "abaumannii" ]]; then
     mv ${MLST_DIR}/${SAMPLE_NAME}.tsv ${MLST_DIR}/${SAMPLE_NAME}_1.tsv
     
     mlst --scheme abaumannii_2 \
-    --threads 30 \
+    --threads ${THREADS} \
     ${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa.gz \
     > ${MLST_DIR}/${SAMPLE_NAME}_2.tsv
     
@@ -40,7 +40,7 @@ elif [[ ${SCHEME} == "ecoli" ]]; then
     mv ${MLST_DIR}/${SAMPLE_NAME}.tsv ${MLST_DIR}/${SAMPLE_NAME}_1.tsv
     
     mlst --scheme ecoli_2 \
-    --threads 30 \
+    --threads ${THREADS} \
     ${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa.gz \
     > ${MLST_DIR}/${SAMPLE_NAME}_2.tsv
     
@@ -51,7 +51,7 @@ elif [[ ${SCHEME} == "ecoli_2" ]]; then
     mv ${MLST_DIR}/${SAMPLE_NAME}.tsv ${MLST_DIR}/${SAMPLE_NAME}_1.tsv
     
     mlst --scheme ecoli \
-    --threads 30 \
+    --threads ${THREADS} \
     ${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa.gz \
     > ${MLST_DIR}/${SAMPLE_NAME}_2.tsv
     

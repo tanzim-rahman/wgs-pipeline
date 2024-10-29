@@ -80,6 +80,10 @@ Options that are **NOT** provided will be automatically imported from the *confi
     - Automatically generates a samplesheet file using the **DIR** directory and saves to the *-s/--samplesheet **FILE*** location. The samples in **DIR** must have the extension fastq.gz or fq.gz and must also contain either _R1/_R2 or _1/_2 in their names to distinguish between reads.
 - -r/--results_dir **DIR**
     - Directory where the run results will be stored. Indiviual sample results are stored in **DIR**/runs/{sample_name}/ while the run summary results are stored in **DIR**/summary/.
+- -t/--threads **INT**
+    - Number of CPU threads to use.
+- -m/--memory **INT**
+    - Maximum memory used by *Spades*.
 - --**REF** **DIR/FILE**
     - Sets the various references to either **DIR** or **FILE**. To be extra secure, use full path names. **REF** options include *--bbduk_ref **FILE***, *--kraken2_db **DIR***, *--gamma_{hv|ar|pf} **FILE***, *--mash_db **FILE***, *--taxa **FILE***, *--mlst_db **DIR/FILE*** and *--assembly_stats **FILE***.
 - --conda **FILE**

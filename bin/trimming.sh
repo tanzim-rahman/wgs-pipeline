@@ -29,7 +29,7 @@ fastp \
     --html ${QC_DIR}/${SAMPLE_NAME}.fastp.html \
     --unpaired1 ${QC_DIR}/${SAMPLE_NAME}_R1_unpaired_fastp.fastq.gz \
     --unpaired2 ${QC_DIR}/${SAMPLE_NAME}_R2_unpaired_fastp.fastq.gz \
-    --thread 30 \
+    --thread ${THREADS} \
     --detect_adapter_for_pe \
     2> ${QC_DIR}/${SAMPLE_NAME}.fastp.log
 
@@ -93,7 +93,7 @@ conda deactivate
 conda activate ${CONDA_ENV_FASTQC}
 
 fastqc \
-    --threads 30 \
+    --threads ${THREADS} \
     ${QC_DIR}/${SAMPLE_NAME}_R1_trimmed_fastp.fastq.gz \
     ${QC_DIR}/${SAMPLE_NAME}_R2_trimmed_fastp.fastq.gz
 

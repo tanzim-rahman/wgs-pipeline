@@ -7,8 +7,8 @@ conda activate ${CONDA_ENV_SPADES}
 mkdir -p ${SPADES_DIR}
 
 spades.py \
-    --threads 30 \
-    --memory 120 \
+    --threads ${THREADS} \
+    --memory ${MEMORY} \
     -s ${QC_DIR}/${SAMPLE_NAME}.singles.fastq.gz \
     -1 ${QC_DIR}/${SAMPLE_NAME}_R1_trimmed_fastp.fastq.gz \
     -2 ${QC_DIR}/${SAMPLE_NAME}_R2_trimmed_fastp.fastq.gz \

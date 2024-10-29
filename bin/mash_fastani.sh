@@ -16,7 +16,7 @@ fi
 
 mash \
     dist \
-    -p 30 \
+    -p ${THREADS} \
     ${MASH_DB} \
     ${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa.gz > ${MASH_DIR}/${SAMPLE_NAME}_${MASH_DB_VERSION}.txt
 

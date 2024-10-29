@@ -8,7 +8,7 @@ mkdir -p ${QUAST_DIR}
 
 quast.py \
     --output-dir ${QUAST_DIR} \
-    --threads 30 \
+    --threads ${THREADS} \
     ${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa.gz
 
 conda deactivate

@@ -8,7 +8,7 @@ mkdir -p ${KRAKEN_ASSEMBLY_DIR}
 
 kraken2 \
     --db ${KRAKEN_DB} \
-    --threads 30 \
+    --threads ${THREADS} \
     --report ${KRAKEN_ASSEMBLY_DIR}/${SAMPLE_NAME}.kraken2_wtasmbld.summary.txt \
     --gzip-compressed \
     --unclassified-out ${KRAKEN_ASSEMBLY_DIR}/${SAMPLE_NAME}_wtasmbld.unclassified.fasta \

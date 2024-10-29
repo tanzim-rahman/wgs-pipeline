@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-# NOTE: Directory names must NOT end with a "/"
+# NOTE: Directory names must NOT end with a "/".
+
+# Number of CPU threads to run programs.
+THREADS=30
+# Maximum memory used by Spades.
+MEMORY=120
 
 # Name for the current run.
 RUN_NAME="birdem"
