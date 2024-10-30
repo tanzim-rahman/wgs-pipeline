@@ -303,6 +303,8 @@ export SAMPLESHEET
 export WORK_DIR
 export RESULTS_DIR
 export RUN_DIR
+export THREADS
+export MEMORY
 export BBDUK_REF
 export KRAKEN_DB
 export GAMMA_HVDB
