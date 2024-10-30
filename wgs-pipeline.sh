@@ -447,9 +447,9 @@ sed 1d ${SAMPLESHEET} | while read -r LINE || [ -n "${LINE}" ]; do
     total_runtime=$(( assembly_ratio_end - trim_start ))
     echo "Total: ${total_runtime}" >> times_${RUN_NAME}.txt
 
-    echo "" >> times_${RUN_NAME}.txt
+    echo "" >> times_${RUN_NAME}.txt;
 
-; done
+done
 
 STATS_CPU=$(( THREADS / 2 ))
 TOTAL_SAMPLES=$( cat ${SAMPLESHEET} | wc -l )
