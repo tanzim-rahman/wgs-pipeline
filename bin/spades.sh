@@ -30,7 +30,7 @@ reformat.sh \
     -Xmx120g \
     in=${SPADES_DIR}/${SAMPLE_NAME}.renamed.scaffolds.fa.gz \
     out=${SPADES_DIR}/${SAMPLE_NAME}.filtered.scaffolds.fa.gz \
-    threads=30 \
+    threads=${THREADS} \
     minlength=500 \
     &> ${SPADES_DIR}/${SAMPLE_NAME}.bbmap_filtered.log
 

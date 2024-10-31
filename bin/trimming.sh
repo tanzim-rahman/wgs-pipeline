@@ -6,13 +6,15 @@ conda activate ${CONDA_ENV_BBMAP}
 
 mkdir -p ${QC_DIR}
 
+BBDUK_MEMORY=$(( ${MEMORY} * 85 / 100 ))
+
 bbduk.sh \
-    -Xmx50g \
+    -Xmx${BBDUK_MEMORY}g \
     in1=${READ_R1} \
     in2=${READ_R2} \
     out1="${QC_DIR}/${SAMPLE_NAME}_R1_trimmed.fastq.gz" \
     out2="${QC_DIR}/${SAMPLE_NAME}_R2_trimmed.fastq.gz" \
-    threads=30 \
+    threads=${THREADS} \
     ref=${BBDUK_REF} \
     &> ${QC_DIR}/${SAMPLE_NAME}.bbduk.log
 
@@ -74,7 +76,7 @@ else
     # Possibly will need to catch when in1 is empty, dont know how fastp handles it, but right now we need to many of its standard outputs
     fastp \
         --in1 ${QC_DIR}/${SAMPLE_NAME}.cat_singles.fastq.gz \
-        --thread $30 \
+        --thread ${THREADS} \
         --json ${QC_DIR}/${SAMPLE_NAME}_singles.fastp.json \
         --html ${QC_DIR}/${SAMPLE_NAME}_singles.fastp.html \
         --out1 ${QC_DIR}/${SAMPLE_NAME}.singles.fastq.gz \
