@@ -33,7 +33,7 @@ ASSEMBLY_RATIO_DIR="${RUN_DIR}/${SAMPLE_NAME}/10-assembly-ratio"
 STATS_DIR="${RUN_DIR}/${SAMPLE_NAME}/11-stats"
 
 # Databases
-BBDUK_REF="/home/igc-1/anaconda3/envs/wgs/opt/bbmap-39.01-1/resources/adapters.fa"
+BBDUK_REF="/home/igc-1/NSNS/wgs_bacteria_30_oct_2024/phiX.fasta"
 
 KRAKEN_DB="/home/igc-1/Documents/Tanzim/db/kraken2db"
 

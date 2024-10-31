@@ -14,6 +14,8 @@ bbduk.sh \
     in2=${READ_R2} \
     out1="${QC_DIR}/${SAMPLE_NAME}_R1_trimmed.fastq.gz" \
     out2="${QC_DIR}/${SAMPLE_NAME}_R2_trimmed.fastq.gz" \
+    hdist=1 \
+    k=31 \
     threads=${THREADS} \
     ref=${BBDUK_REF} \
     &> ${QC_DIR}/${SAMPLE_NAME}.bbduk.log
@@ -31,6 +33,13 @@ fastp \
     --html ${QC_DIR}/${SAMPLE_NAME}.fastp.html \
     --unpaired1 ${QC_DIR}/${SAMPLE_NAME}_R1_unpaired_fastp.fastq.gz \
     --unpaired2 ${QC_DIR}/${SAMPLE_NAME}_R2_unpaired_fastp.fastq.gz \
+    -r \
+    --cut_right_window_size 20 \
+    --cut_right_mean_quality 30 \
+    -l 50 \
+    -g \
+    -5 20 \
+    -3 20 \
     --thread ${THREADS} \
     --detect_adapter_for_pe \
     2> ${QC_DIR}/${SAMPLE_NAME}.fastp.log
