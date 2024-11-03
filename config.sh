@@ -44,7 +44,7 @@ DB_NAME_AR=$( echo ${GAMMA_ARDB} | sed 's:.*/::' | sed 's/.fasta//' )
 DB_NAME_HV=$( echo ${GAMMA_HVDB} | sed 's:.*/::' | sed 's/.fasta//' )
 DB_NAME_PF=$( echo ${GAMMA_PFDB} | sed 's:.*/::' | sed 's/.fasta//' )
 
-ZIPPED_SKETCH="/home/igc-1/Pipelines/phoenix-2.0.2/assets/databases/REFSEQ_20230504_Bacteria_complete.msh.gz"
+ZIPPED_SKETCH="/home/igc-1/NSNS/wgs_bacteria_30_oct_2024/REFSEQ_20240124_Bacteria_complete.msh"
 MASH_DB=${ZIPPED_SKETCH%.gz}
 MASH_DB_VERSION=$( echo ${MASH_DB##*/} | cut -d '_' -f1,2 )
 
